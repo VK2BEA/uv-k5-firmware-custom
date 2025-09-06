@@ -661,7 +661,7 @@ void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const b
     }
 
     BK4819_WriteRegister(BK4819_REG_43, val);
-    BK4819_WriteRegister(BK4819_REG_40, BK4819_40_ENABLE_DEVIATION | val_deviation )
+    BK4819_WriteRegister(BK4819_REG_40, BK4819_40_ENABLE_DEVIATION | val_deviation );
 
 }
 
