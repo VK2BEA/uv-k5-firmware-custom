@@ -607,12 +607,17 @@ void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const b
     //         1 = 6dB
     //
     // <1:0>   0 ???
+    
+#define BK4819_40_ENABLE_DEVIATION  (1<<12)
 
     uint16_t val = 0;
+    uint16_t val_deviation = 0x04D0;
+    
     switch (Bandwidth)
     {
         default:
         case BK4819_FILTER_BW_WIDE: // 25kHz
+            val_deviation *= 1.25;
             if (weak_no_different) {
                 // make the RX bandwidth the same with weak signals
                 val = 0x3628; // Old value 0x49a8 < v3.6
@@ -656,6 +661,8 @@ void BK4819_SetFilterBandwidth(const BK4819_FilterBandwidth_t Bandwidth, const b
     }
 
     BK4819_WriteRegister(BK4819_REG_43, val);
+    BK4819_WriteRegister(BK4819_REG_40, BK4819_40_ENABLE_DEVIATION | val_deviation )
+
 }
 
 void BK4819_SetupPowerAmplifier(const uint8_t bias, const uint32_t frequency)
